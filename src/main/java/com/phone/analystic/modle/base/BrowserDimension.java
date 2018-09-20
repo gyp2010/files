@@ -61,6 +61,9 @@ public class BrowserDimension extends BaseDimension{
             return tmp;
         }
         tmp = this.browserName.compareTo(other.browserName);
+        if(tmp != 0){
+            return tmp;
+        }
         return this.browserVersion.compareTo(browserVersion);
     }
 

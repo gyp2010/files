@@ -1,5 +1,7 @@
 package com.phone.analystic.mr.nu;
 
+import com.phone.analystic.modle.StatsUserDimension;
+import com.phone.analystic.modle.value.map.TimeOutputValue;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -7,9 +9,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 /**
  * @ClassName NewUserMapper
  * @Author lyd
- * @Date $ $
+ * @Date
  * @Vesion 1.0
- * @Description //TODO $
+ * @Description
  **/
-public class NewUserMapper extends Mapper<LongWritable,Text,Text,Text> {
+public class NewUserMapper extends Mapper<LongWritable,Text,StatsUserDimension,TimeOutputValue> {
+
 }
