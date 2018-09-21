@@ -1,6 +1,7 @@
 package com.phone.etl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.phone.common.GlobalConstants;
 import com.phone.etl.ip.IPSeeker;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -166,7 +167,7 @@ public class IpUtil extends IPSeeker {
      */
     public static class RegionInfo{
 
-        private String DEFAULT_VALUE = "unknown";
+        private String DEFAULT_VALUE = GlobalConstants.DEFAULT_VALUE;
         private String country = DEFAULT_VALUE;
         private String province = DEFAULT_VALUE;
         private String city = DEFAULT_VALUE;

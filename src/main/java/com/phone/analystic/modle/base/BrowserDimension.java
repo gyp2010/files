@@ -33,7 +33,6 @@ public class BrowserDimension extends BaseDimension{
 
     //构建浏览器的维度集合对象
 
-
     @Override
     public void write(DataOutput dataOutput) throws IOException {
         dataOutput.writeInt(this.id);

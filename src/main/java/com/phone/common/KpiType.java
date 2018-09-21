@@ -8,7 +8,7 @@ package com.phone.common;
  * @Description 统计指标的枚举
  **/
 public enum KpiType {
-    INEW_USER("new_user"),
+    NEW_USER("new_user"),
     BROWSER_NEW_USER("browser_new_user")
     ;
 
@@ -31,5 +31,4 @@ public enum KpiType {
         }
         return null;
     }
-
 }
