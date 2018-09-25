@@ -6,4 +6,10 @@
         <name>writter_new_user</name>
         <value>com.phone.analystic.mr.nu.NewUserOutputWritter</value>
     </property>
+
+    <property>
+        <name>writter_browser_new_user</name>
+        <value>com.phone.analystic.mr.nu.BrowserNewUserOutputWritter</value>
+    </property>
+
 </configuration>
