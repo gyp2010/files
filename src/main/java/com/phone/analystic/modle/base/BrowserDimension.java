@@ -1,5 +1,8 @@
 package com.phone.analystic.modle.base;
 
+import com.phone.common.GlobalConstants;
+import org.apache.commons.lang.StringUtils;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
@@ -32,6 +35,16 @@ public class BrowserDimension extends BaseDimension{
 
 
     //构建浏览器的维度集合对象
+    public static BrowserDimension getInstance(String browserName, String browserVersion){
+       if(StringUtils.isEmpty(browserName)){
+           browserName = browserVersion = GlobalConstants.DEFAULT_VALUE;
+       }
+        if(StringUtils.isEmpty(browserVersion)){
+            browserVersion = GlobalConstants.DEFAULT_VALUE;
+        }
+        return new BrowserDimension(browserName,browserVersion);
+    }
+
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {

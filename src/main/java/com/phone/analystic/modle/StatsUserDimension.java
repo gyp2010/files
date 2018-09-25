@@ -1,7 +1,5 @@
 package com.phone.analystic.modle;
 
-import com.phone.analystic.modle.StatsBaseDimension;
-import com.phone.analystic.modle.StatsCommonDimension;
 import com.phone.analystic.modle.base.BaseDimension;
 import com.phone.analystic.modle.base.BrowserDimension;
 
@@ -37,6 +35,19 @@ public class StatsUserDimension extends StatsBaseDimension {
     public void readFields(DataInput dataInput) throws IOException {
         this.statsCommonDimension.readFields(dataInput);
         this.browserDimension.readFields(dataInput);
+    }
+
+
+    /**
+     * 克隆一个当前的新对象
+     * @param dimension
+     * @return
+     */
+    public static final StatsUserDimension clone(StatsUserDimension dimension){
+          StatsCommonDimension statsCommonDimension = StatsCommonDimension.clone(dimension.statsCommonDimension);
+          BrowserDimension browserDimension = new BrowserDimension(dimension.browserDimension.getBrowserName(),
+                dimension.browserDimension.getBrowserVersion());
+        return new StatsUserDimension(statsCommonDimension,browserDimension);
     }
 
     @Override

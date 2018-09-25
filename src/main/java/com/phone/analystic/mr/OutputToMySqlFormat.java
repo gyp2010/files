@@ -96,7 +96,7 @@ public class OutputToMySqlFormat extends OutputFormat<StatsBaseDimension,OutputW
                 count++;
 
                 //为ps赋值准备
-                String calssName = conf.get("writter_"+conf.get(kpi.kpiName));
+                String calssName = conf.get("writter_"+kpi.kpiName);
                 //com.phone.analystic.mr.nu.NewUserOutputWritter
                 Class<?> classz = Class.forName(calssName); //将报名+类名转换成类
                 IOutputWritter writter = (IOutputWritter)classz.newInstance();

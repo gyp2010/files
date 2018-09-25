@@ -1,6 +1,7 @@
 package com.phone.analystic.modle;
 
 import com.phone.analystic.modle.base.*;
+import com.phone.common.KpiType;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -39,6 +40,24 @@ public class StatsCommonDimension extends StatsBaseDimension {
         this.dateDimension.readFields(dataInput);
         this.platformDimension.readFields(dataInput);
         this.kpiDimension.readFields(dataInput);
+    }
+
+    /**
+     * 克隆一个实例
+     * @param dimension
+     * @return
+     */
+    public static StatsCommonDimension clone(StatsCommonDimension dimension){
+        KpiDimension kpi = new KpiDimension(dimension.kpiDimension.getKpiName());
+        PlatformDimension platform = new PlatformDimension(dimension.platformDimension.getPlatformName());
+        DateDimension date = new DateDimension(dimension.dateDimension.getYear(),
+                dimension.dateDimension.getSeason(),
+                dimension.dateDimension.getMonth(),
+                dimension.dateDimension.getWeek(),
+                dimension.dateDimension.getDay(),
+                dimension.dateDimension.getType(),
+                dimension.dateDimension.getCalendar());
+        return new StatsCommonDimension(date,platform,kpi);
     }
 
     @Override

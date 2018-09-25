@@ -48,6 +48,9 @@ public class NewUserMapper extends Mapper<LongWritable,Text,StatsUserDimension,T
             String serverTime = fields[1];
             String platform = fields[13];
             String uuid = fields[3];
+            String browserName = fields[24];
+            String browserVersion = fields[25];
+
 
             if(StringUtils.isEmpty(serverTime) || StringUtils.isEmpty(uuid)){
                 logger.info("serverTime & uuid is null.serverTime:"+serverTime+". uuid:"+uuid);
@@ -58,6 +61,7 @@ public class NewUserMapper extends Mapper<LongWritable,Text,StatsUserDimension,T
             long stime = Long.valueOf(serverTime);
             PlatformDimension platformDimension = PlatformDimension.getInstance(platform);
             DateDimension dateDimension = DateDimension.buildDate(stime,DateEnum.DAY);
+            BrowserDimension browserDimension = BrowserDimension.getInstance(browserName,browserVersion);
 
             StatsCommonDimension statsCommonDimension = this.k.getStatsCommonDimension();
 
@@ -71,9 +75,17 @@ public class NewUserMapper extends Mapper<LongWritable,Text,StatsUserDimension,T
             this.k.setBrowserDimension(defaultBrowserDimension);
             this.k.setStatsCommonDimension(statsCommonDimension);
 
+
             //构建输出的value
             this.v.setId(uuid);
             //输出
+            context.write(this.k,this.v);
+
+            //以下输出的数据用于计算浏览器模块下的新增用户
+            statsCommonDimension.setKpiDimension(browserNewUserKpi);
+            this.k.setBrowserDimension(browserDimension);
+            this.k.setStatsCommonDimension(statsCommonDimension);
+
             context.write(this.k,this.v);
 
         }
