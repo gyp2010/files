@@ -20,6 +20,6 @@ public interface IOutputWritter {
      * @param ps
      * @param iDimension
      */
-    void ouput(Configuration conf, StatsBaseDimension key,
+    void output(Configuration conf, StatsBaseDimension key,
                StatsOutpuValue value, PreparedStatement ps, IDimension iDimension);
 }

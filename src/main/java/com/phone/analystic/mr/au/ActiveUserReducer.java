@@ -8,7 +8,7 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间         版本号            描述
  */
-package com.phone.analystic.mr.nu;
+package com.phone.analystic.mr.au;
 
 import com.phone.analystic.modle.StatsUserDimension;
 import com.phone.analystic.modle.value.map.TimeOutputValue;
@@ -24,15 +24,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 〈一句话功能简述〉<br> 
- * 〈NewUserReducer---reduce方法〉
- *
- * @author 14751
- * @create 2018/9/20 
- * @since 1.0.0
+ * 活跃的用户的reducer类
  */
-public class NewUserReducer extends Reducer<StatsUserDimension,TimeOutputValue,StatsUserDimension,OutputWritable> {
-    private static final Logger logger = Logger.getLogger(NewUserReducer.class);
+public class ActiveUserReducer extends Reducer<StatsUserDimension,TimeOutputValue,StatsUserDimension,OutputWritable> {
+    private static final Logger logger = Logger.getLogger(ActiveUserReducer.class);
     private OutputWritable v = new OutputWritable();
     private Set unique = new HashSet();//用于去重，利用HashSet
     private MapWritable map = new MapWritable();
@@ -48,11 +43,6 @@ public class NewUserReducer extends Reducer<StatsUserDimension,TimeOutputValue,S
         //构造输出的value
         //根据kpi别名获取kpi类型（比较灵活） --- 第一种方法
         this.v.setKpi(KpiType.valueOfKpiName(key.getStatsCommonDimension().getKpiDimension().getKpiName()));
-
-        //这样写比较死，对于每一个kpi都需要进行判断
-//        if(key.getStatsCommonDimension().getKpiDimension().getKpiName().equals(KpiType.NEW_USER.kpiName)){
-//            this.v.setKpi(KpiType.NEW_USER);
-//        }
 
         //通过集合的size统计新增用户uuid的个数，前面的key可以随便设置，就是用来标识新增用户个数的（比较难理解）
         this.map.put(new IntWritable(-1),new IntWritable(this.unique.size()));

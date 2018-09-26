@@ -16,8 +16,9 @@ import java.util.Objects;
  * @Description 可以用于用户模块和浏览器模块的map和reduce阶段输出的key的类型
  **/
 public class StatsUserDimension extends StatsBaseDimension {
-    private StatsCommonDimension statsCommonDimension = new StatsCommonDimension();
     private BrowserDimension browserDimension = new BrowserDimension();
+    private StatsCommonDimension statsCommonDimension = new StatsCommonDimension();
+
     public StatsUserDimension(){}
 
     public StatsUserDimension(StatsCommonDimension statsCommonDimension, BrowserDimension browserDimension) {

@@ -8,7 +8,7 @@
  * <author>          <time>          <version>          <desc>
  * 作者姓名           修改时间         版本号            描述
  */
-package com.phone.analystic.mr.nu;
+package com.phone.analystic.mr.am;
 
 import com.phone.analystic.modle.StatsBaseDimension;
 import com.phone.analystic.modle.StatsUserDimension;
@@ -25,15 +25,10 @@ import org.apache.log4j.Logger;
 import java.sql.PreparedStatement;
 
 /**
- * 〈一句话功能简述〉<br> 
- * 〈对于不同的指标，这列赋值都是不一样的〉
- *
- * @author 14751
- * @create 2018/9/21 
- * @since 1.0.0
+ * 活跃用户的sql赋值
  */
-public class NewUserOutputWritter implements IOutputWritter {
-    private static final Logger logger = Logger.getLogger(NewUserOutputWritter.class);
+public class ActiveMemberOutputWritter implements IOutputWritter {
+    private static final Logger logger = Logger.getLogger(ActiveMemberOutputWritter.class);
     @Override
     //这里通过key和value给ps语句赋值
     public void output(Configuration conf, StatsBaseDimension key, StatsOutpuValue value, PreparedStatement ps, IDimension iDimension) {
@@ -42,14 +37,14 @@ public class NewUserOutputWritter implements IOutputWritter {
             StatsUserDimension k = (StatsUserDimension) key;
             OutputWritable v = (OutputWritable) value;
 
-            //获取新增用户的值
+            //获取活跃用户的值
             int newUser = ((IntWritable)(v.getValue().get(new IntWritable(-1)))).get();
 
             int i = 0;
             ps.setInt(++i,iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getDateDimension()));
             ps.setInt(++i,iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getPlatformDimension()));
             //修改1
-            if(v.getKpi().equals(KpiType.BROWSER_NEW_USER)){
+            if(v.getKpi().equals(KpiType.BROWSER_ACTIVE_MEMBER)){
                 ps.setInt(++i,iDimension.getDiemnsionIdByObject(k.getBrowserDimension()));
             }
             ps.setInt(++i,newUser);

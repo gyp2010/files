@@ -101,9 +101,9 @@ public class OutputToMySqlFormat extends OutputFormat<StatsBaseDimension,OutputW
                 Class<?> classz = Class.forName(calssName); //将报名+类名转换成类
                 IOutputWritter writter = (IOutputWritter)classz.newInstance();
                 //调用IOutputWritter中的output方法
-                writter.ouput(conf,key,value,ps,iDimension);
+                writter.output(conf,key,value,ps,iDimension);
 
-                //对赋值好的ps进行执行
+                //对赋值好的ps进行执行t
                 if(batch.size()%50 == 0){  //有50个ps执行
                     ps.executeBatch();  //批量执行
                     this.conn.commit(); //提交批处理执行
