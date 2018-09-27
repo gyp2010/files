@@ -45,8 +45,8 @@ public class NewMemberMapper extends Mapper<LongWritable,Text,StatsUserDimension
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
-            MemberUtil.deleteByDay(context.getConfiguration());
             conn = JdbcUtil.getConn();
+            MemberUtil.deleteByDay(context.getConfiguration(),conn);
     }
 
     @Override
@@ -67,10 +67,11 @@ public class NewMemberMapper extends Mapper<LongWritable,Text,StatsUserDimension
             String browserName = fields[24];
             String browserVersion = fields[25];
 
-            if (StringUtils.isEmpty(serverTime) || StringUtils.isEmpty(memberId)) {
+            if (StringUtils.isEmpty(serverTime) || StringUtils.isEmpty(memberId) || memberId.equals("null")) {
                 logger.info("serverTime & memberId is null serverTime:" + serverTime + ".memberId" + memberId);
                 return;
             }
+            logger.info("inputData========:"+line);
 
             //判断是不是为新增会员
             if(!MemberUtil.isNewMember(memberId,conn,context.getConfiguration())){
@@ -103,5 +104,10 @@ public class NewMemberMapper extends Mapper<LongWritable,Text,StatsUserDimension
             this.k.setBrowserDimension(browserDimension);
             this.k.setStatsCommonDimension(statsCommonDimension);
             context.write(this.k, this.v);//输出
+    }
+
+    @Override
+    protected void cleanup(Context context) throws IOException, InterruptedException {
+        JdbcUtil.close(conn,null,null);
     }
 }

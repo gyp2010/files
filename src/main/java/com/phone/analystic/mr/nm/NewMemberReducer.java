@@ -56,6 +56,7 @@ public class NewMemberReducer extends Reducer<StatsUserDimension,TimeOutputValue
             this.map.put(new IntWritable(-2),new Text(en.getKey()));
             Collections.sort(en.getValue());
             this.map.put(new IntWritable(-3),new LongWritable(en.getValue().get(0)));
+            this.v.setValue(this.map);
             context.write(key,this.v);
         }
 
@@ -64,7 +65,7 @@ public class NewMemberReducer extends Reducer<StatsUserDimension,TimeOutputValue
         this.v.setKpi(KpiType.valueOfKpiName(key.getStatsCommonDimension().getKpiDimension().getKpiName()));
 
         //通过集合的size统计新增用户uuid的个数，前面的key可以随便设置，就是用来标识新增用户个数的（比较难理解）
-        this.map.put(new IntWritable(-1),new IntWritable(this.unique.size()));
+        this.map.put(new IntWritable(-1),new IntWritable(this.li.size()));
         this.v.setValue(this.map);
         //输出
         context.write(key,this.v);

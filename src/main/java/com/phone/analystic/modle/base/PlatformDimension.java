@@ -91,4 +91,12 @@ public class PlatformDimension extends BaseDimension{
     public void setPlatformName(String platformName) {
         this.platformName = platformName;
     }
+
+    @Override
+    public String toString() {
+        return "PlatformDimension{" +
+                "id=" + id +
+                ", platformName='" + platformName + '\'' +
+                '}';
+    }
 }

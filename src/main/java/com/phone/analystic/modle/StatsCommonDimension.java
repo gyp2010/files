@@ -117,4 +117,13 @@ public class StatsCommonDimension extends StatsBaseDimension {
     public void setKpiDimension(KpiDimension kpiDimension) {
         this.kpiDimension = kpiDimension;
     }
+
+    @Override
+    public String toString() {
+        return "StatsCommonDimension{" +
+                "dateDimension=" + dateDimension +
+                ", platformDimension=" + platformDimension +
+                ", kpiDimension=" + kpiDimension +
+                '}';
+    }
 }

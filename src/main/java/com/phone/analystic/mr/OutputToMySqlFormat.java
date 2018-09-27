@@ -104,7 +104,7 @@ public class OutputToMySqlFormat extends OutputFormat<StatsBaseDimension,OutputW
                 writter.output(conf,key,value,ps,iDimension);
 
                 //对赋值好的ps进行执行t
-                if(batch.size()%50 == 0){  //有50个ps执行
+                if(batch.size()%50 == 0 || batch.get(kpi)%50 == 0){  //有50个ps执行
                     ps.executeBatch();  //批量执行
                     this.conn.commit(); //提交批处理执行
                     batch.remove(kpi); //将执行完的ps移除掉
@@ -126,10 +126,10 @@ public class OutputToMySqlFormat extends OutputFormat<StatsBaseDimension,OutputW
             try {
                 for (Map.Entry<KpiType,PreparedStatement> en:map.entrySet()){
                     en.getValue().executeBatch(); //将剩余的ps进行执行
-                    this.conn.commit();
+//                    this.conn.commit();
                 }
             } catch (SQLException e) {
-
+                e.printStackTrace();
             } finally {
                 for (Map.Entry<KpiType,PreparedStatement> en:map.entrySet()){
                     JdbcUtil.close(conn,en.getValue(),null); //关闭所有能关闭的资源

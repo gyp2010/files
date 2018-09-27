@@ -238,4 +238,18 @@ public class DateDimension extends BaseDimension{
     public void setCalendar(Date calendar) {
         this.calendar = calendar;
     }
+
+    @Override
+    public String toString() {
+        return "DateDimension{" +
+                "id=" + id +
+                ", year=" + year +
+                ", season=" + season +
+                ", month=" + month +
+                ", week=" + week +
+                ", day=" + day +
+                ", type='" + type + '\'' +
+                ", calendar=" + calendar +
+                '}';
+    }
 }

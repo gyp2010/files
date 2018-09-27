@@ -42,4 +42,29 @@
         <value>com.phone.analystic.mr.nm.NewMemberOutputWritter</value>
     </property>
 
+    <property>
+        <name>writter_member_info</name>
+        <value>com.phone.analystic.mr.nm.NewMemberOutputWritter</value>
+    </property>
+
+    <property>
+        <name>writter_session</name>
+        <value>com.phone.analystic.mr.seesion.SessionOutputWritter</value>
+    </property>
+
+    <property>
+        <name>writter_browser_session</name>
+        <value>com.phone.analystic.mr.seesion.SessionOutputWritter</value>
+    </property>
+
+    <property>
+        <name>writter_hourly_active_user</name>
+        <value>com.phone.analystic.mr.au.ActiveUserOutputWritter</value>
+    </property>
+
+    <property>
+        <name>writter_local</name>
+        <value>com.phone.analystic.mr.local.LocalWriter</value>
+    </property>
+
 </configuration>

@@ -22,20 +22,20 @@ public class StatsUserDimension extends StatsBaseDimension {
     public StatsUserDimension(){}
 
     public StatsUserDimension(StatsCommonDimension statsCommonDimension, BrowserDimension browserDimension) {
-        this.statsCommonDimension = statsCommonDimension;
         this.browserDimension = browserDimension;
+        this.statsCommonDimension = statsCommonDimension;
     }
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
-        this.statsCommonDimension.write(dataOutput);
         this.browserDimension.write(dataOutput);
+        this.statsCommonDimension.write(dataOutput);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
-        this.statsCommonDimension.readFields(dataInput);
         this.browserDimension.readFields(dataInput);
+        this.statsCommonDimension.readFields(dataInput);
     }
 
 
@@ -58,11 +58,11 @@ public class StatsUserDimension extends StatsBaseDimension {
         }
 
         StatsUserDimension other = (StatsUserDimension) o;
-        int tmp = this.statsCommonDimension.compareTo(other.statsCommonDimension);
+        int tmp = this.browserDimension.compareTo(browserDimension);
         if(tmp != 0){
             return tmp;
         }
-        return this.browserDimension.compareTo(browserDimension);
+        return this.statsCommonDimension.compareTo(other.statsCommonDimension);
     }
 
     @Override
@@ -94,5 +94,13 @@ public class StatsUserDimension extends StatsBaseDimension {
 
     public void setBrowserDimension(BrowserDimension browserDimension) {
         this.browserDimension = browserDimension;
+    }
+
+    @Override
+    public String toString() {
+        return "StatsUserDimension{" +
+                "browserDimension=" + browserDimension +
+                ", statsCommonDimension=" + statsCommonDimension +
+                '}';
     }
 }

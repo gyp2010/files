@@ -118,4 +118,13 @@ public class BrowserDimension extends BaseDimension{
     public void setBrowserVersion(String browserVersion) {
         this.browserVersion = browserVersion;
     }
+
+    @Override
+    public String toString() {
+        return "BrowserDimension{" +
+                "id=" + id +
+                ", browserName='" + browserName + '\'' +
+                ", browserVersion='" + browserVersion + '\'' +
+                '}';
+    }
 }

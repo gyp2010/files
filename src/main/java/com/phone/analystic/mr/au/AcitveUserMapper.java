@@ -64,6 +64,7 @@ public class AcitveUserMapper extends Mapper<LongWritable,Text,StatsUserDimensio
 
             //构造输出的key
             long stime = Long.valueOf(serverTime);
+            this.v.setTime(stime);
             PlatformDimension platformDimension = PlatformDimension.getInstance(platform);
             DateDimension dateDimension = DateDimension.buildDate(stime, DateEnum.DAY);
             StatsCommonDimension statsCommonDimension = this.k.getStatsCommonDimension();

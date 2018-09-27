@@ -17,6 +17,10 @@ public enum KpiType {
     NEW_MEMBER("new_member"),
     BROWSER_NEW_MEMBER("browser_new_member"),
     MEMBER_INFO("member_info"),
+    SESSION("session"),
+    BROWSER_SESSION("browser_session"),
+    HOURLY_ACTIVE_USER("hourly_active_user"),
+    LOCAL("local"),
     ;
 
     public String kpiName;

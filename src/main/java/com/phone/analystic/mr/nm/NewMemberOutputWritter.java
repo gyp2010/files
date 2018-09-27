@@ -41,7 +41,7 @@ public class NewMemberOutputWritter implements IOutputWritter {
                     ps.setInt(++i,iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getDateDimension()));
                     ps.setInt(++i,iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getPlatformDimension()));
                     //修改1
-                    if(v.getKpi().equals(KpiType.BROWSER_ACTIVE_MEMBER)){
+                    if(v.getKpi().equals(KpiType.BROWSER_NEW_MEMBER)){
                         ps.setInt(++i,iDimension.getDiemnsionIdByObject(k.getBrowserDimension()));
                     }
                     ps.setInt(++i,newUser);
@@ -61,10 +61,10 @@ public class NewMemberOutputWritter implements IOutputWritter {
                     default:
                         break;
             }
-
             ps.addBatch();//添加到批处理中，批量执行SQL语句
+//            ps.executeBatch();
         } catch (Exception e) {
-            logger.warn("给ps赋值失败！！！");
+            logger.warn("给ps赋值失败！！！",e);
         }
     }
 }

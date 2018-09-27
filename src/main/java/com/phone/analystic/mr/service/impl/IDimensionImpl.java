@@ -55,6 +55,10 @@ public class IDimensionImpl implements IDimension {
                  sqls = buildDateSqls(dimension);
             } else if(dimension instanceof BrowserDimension){
                  sqls = buildBrowserSqls(dimension);
+            } else if(dimension instanceof LocationDimension){
+                sqls = buildLocalSqls(dimension);
+            } else if(dimension instanceof EventDimension){
+                sqls = buildEventSqls(dimension);
             }
 
             //获取jdbc的连接
@@ -104,6 +108,18 @@ public class IDimensionImpl implements IDimension {
         return new String[]{insertSql,selectSql};
     }
 
+    private String[] buildLocalSqls(BaseDimension dimension) {
+        String query = "select id from `dimension_location` where `country` = ? and `province` = ? and `city` = ? ";
+        String insert = "insert into `dimension_location`(`country` , `province` , `city`) values(?,?,?)";
+        return new String[]{insert,query};
+    }
+
+    private String[] buildEventSqls(BaseDimension dimension) {
+        String query = "select id from `dimension_event` where `category` = ? and `action` = ? ";
+        String insert = "insert into `dimension_event`(`category` , `action` ) values(?,?)";
+        return new String[]{insert,query};
+    }
+
     /**
      * 构建维度key
      * @param dimension
@@ -136,6 +152,17 @@ public class IDimensionImpl implements IDimension {
             PlatformDimension platform = (PlatformDimension)dimension;
             sb.append(platform.getPlatformName());
             //new_user
+        } else if(dimension instanceof LocationDimension){
+            LocationDimension local = (LocationDimension) dimension;
+            sb.append("local_");
+            sb.append(local.getCountry());
+            sb.append(local.getProvince());
+            sb.append(local.getCity());
+        } else if(dimension instanceof EventDimension){
+            EventDimension event = (EventDimension) dimension;
+            sb.append("event_");
+            sb.append(event.getCategory());
+            sb.append(event.getAction());
         }
         return sb != null ? sb.toString() : null;
     }
@@ -202,6 +229,15 @@ public class IDimensionImpl implements IDimension {
                 BrowserDimension browser = (BrowserDimension)dimension;
                 ps.setString(++i,browser.getBrowserName());
                 ps.setString(++i,browser.getBrowserVersion());
+            } else if(dimension instanceof LocationDimension){
+                LocationDimension local = (LocationDimension) dimension;
+                ps.setString(++i,local.getCountry());
+                ps.setString(++i,local.getProvince());
+                ps.setString(++i,local.getCity());
+            } else if(dimension instanceof EventDimension){
+                EventDimension event = (EventDimension) dimension;
+                ps.setString(++i,event.getCategory());
+                ps.setString(++i,event.getAction());
             }
         } catch (SQLException e) {
             e.printStackTrace();

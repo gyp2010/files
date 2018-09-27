@@ -58,7 +58,7 @@ public class MemberUtil {
             res = cache.get(memberId);
             if (res == null) {
                 //缓存中没有，去数据库查询
-                String sql = conf.get("other" + "member_info");
+                String sql = conf.get("other_" + "member_info");
                 ps = conn.prepareStatement(sql);
                 ps.setString(1, memberId);
                 rs = ps.executeQuery();
@@ -80,16 +80,16 @@ public class MemberUtil {
      * 删除莫一天的会员，意在重新跑某一天的新增会员
      * @param conf
      */
-    public static void deleteByDay(Configuration conf){
-        Connection conn = null;
+    public static void deleteByDay(Configuration conf,Connection conn){
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(conf.get("other_delete_member_info"));
             ps.setString(1,conf.get(GlobalConstants.RUNNING_DATE));
+            ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            JdbcUtil.close(conn,ps,null);
+            JdbcUtil.close(null,ps,null);
         }
 
     }

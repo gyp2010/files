@@ -83,4 +83,12 @@ public class KpiDimension extends BaseDimension{
     public void setKpiName(String kpiName) {
         this.kpiName = kpiName;
     }
+
+    @Override
+    public String toString() {
+        return "KpiDimension{" +
+                "id=" + id +
+                ", kpiName='" + kpiName + '\'' +
+                '}';
+    }
 }
