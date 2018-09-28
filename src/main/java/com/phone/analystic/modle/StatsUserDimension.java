@@ -58,7 +58,7 @@ public class StatsUserDimension extends StatsBaseDimension {
         }
 
         StatsUserDimension other = (StatsUserDimension) o;
-        int tmp = this.browserDimension.compareTo(browserDimension);
+        int tmp = this.browserDimension.compareTo(other.browserDimension);
         if(tmp != 0){
             return tmp;
         }

@@ -123,3 +123,81 @@ where month = 9
 and day = 19
 ;
 
+在hive中创建和mysql最终结果便一样的临时表：
+CREATE TABLE if not exists `stats_event` (
+  `platform_dimension_id` int,
+  `date_dimension_id` int,
+  `event_dimension_id` int,
+  `times` int,
+  `created` String
+)
+;
+
+
+语句：
+set hive.exec.mode.local.auto=true;
+set hive.groupby.skewindata=true;
+from(
+select
+from_unixtime(cast(p.s_time/1000 as bigint),"yyyy-MM-dd") as dt,
+p.pl as pl,
+p.ca as ca,
+p.ac as ac,
+count(*) as ct
+from phone p
+where p.month = 9
+and p.day = 19
+and en = 'e_e'
+group by from_unixtime(cast(p.s_time/1000 as bigint),"yyyy-MM-dd"),p.pl,p.ca,p.ac
+) as tmp
+insert overwrite table stats_event
+select phone_platform(pl),phone_date(dt),phone_event(ca,ac),ct,dt
+;
+
+扩展维度：
+set hive.exec.mode.local.auto=true;
+set hive.groupby.skewindata=true;
+with tmp as(
+select
+from_unixtime(cast(l.s_time/1000 as bigint),"yyyy-MM-dd") as dt,
+l.pl as pl,
+l.ca as ca,
+l.ac as ac
+from phone l
+where month = 9
+and day = 19
+and l.en = 'e_e'
+and l.s_time <> 'null'
+)
+from (
+select dt as dt,pl as pl,ca as ca,ac as ac,count(1) as ct from tmp group by dt,pl,ca,ac union all
+select dt as dt,pl as pl,ca as ca,'all' as ac,count(1) as ct from tmp group by dt,pl,ca union all
+select dt as dt,'all' as pl,ca as ca,ac as ac,count(1) as ct from tmp group by dt,ca,ac union all
+select dt as dt,'all' as pl,ca as ca,'all' as ac,count(1) as ct from tmp group by dt,ca
+) as tmp1
+insert overwrite table stats_event
+select phone_date(dt),phone_platform(pl),phone_event(ca,ac),sum(ct),'2018-09-19'
+group by pl,dt,ca,ac
+;
+
+
+
+
+3	1	1
+3	1	3
+3	3	1
+3	3	3
+
+sqoop export --connect jdbc:mysql://hadoop01:3306/result \
+--username root --password root -m 1 \
+--table stats_event --export-dir hdfs://hadoop01:9000/hive/log_phone.db/stats_event/* \
+--input-fields-terminated-by "\\01" --update-mode allowinsert \
+--update-key date_dimension_id,platform_dimension_id,event_dimension_id \
+;
+
+
+
+
+1	3	订单事件|订单产生	1	2018-09-19
+1	3	订单事件|订单支付	1	2018-09-19
+1	3	点击|赞	200	2018-09-19
